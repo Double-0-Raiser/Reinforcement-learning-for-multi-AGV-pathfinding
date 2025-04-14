@@ -12,11 +12,6 @@ We also provide AG-DQN algorithms, behavioral cloning trick.
 from multiAGVscene.Layout import Layout  # layout
 from multiAGVscene.Explorer import Explorer  # explorer
 from multiAGVscene.Scene import Scene  # Scene
-from src.algorithm.Manager.ExpertManager import Expert as Expert
-# from DQN_structure.Controller import DQNAgentController as modelController
-# from algorithm.AC_structure.Controller import ACAgentController as modelController
-from algorithm.PG_structure.Controller import PGAgentController as modelController
-# from src.algorithm.MADQN_structure.Controller import MADQNAgentController as modelController
 
 
 def main():
@@ -47,18 +42,6 @@ def main():
     print("Model is controlled by %s mode" % control_type[control_mode])
     if control_mode in [2, 3]:
         multi_agv_scene.run_game(control_pattern=control_type[control_mode])
-    if control_mode in [4]:
-        expert = Expert(multi_agv_scene, ss_x_width, ss_y_width, ss_x_num, ss_y_num, ps_num, explorer_num)
-        expert.create_data_by_self(times=750)
-    if control_mode in [0, 1]:
-        map_xdim = layout.scene_x_width
-        map_ydim = layout.scene_y_width
-        max_task = len(layout.storage_station_list)
-        agent = modelController(multi_agv_scene, map_xdim=map_xdim, map_ydim=map_ydim, max_task=max_task,
-                                control_mode=control_type[control_mode], state_number=3, expert_guiding=True)
-        # agent = modelController(multi_agv_scene, map_xdim=7, map_ydim=7, max_task=max_task,
-        #                         control_mode=control_type[control_mode], state_number=3)
-        agent.model_run()
 
 
 if __name__ == '__main__':

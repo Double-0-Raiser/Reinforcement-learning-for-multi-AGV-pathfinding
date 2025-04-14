@@ -141,21 +141,6 @@ class Scene:
                     expert_action.append(self.dir.action_str_value(input_action))
                 if running_type in ["manual"]:
                     input_action = key_input_action
-                if running_type in ["intelligent"]:
-                    all_info = self.create_info()  # all_info=[layout, [veh1_details], [veh2_details]...]
-                    input_action = self.smart_controller.choose_action(all_info, explorer.explorer_name)  # get action
-                    input_action = self.dir.action_value_str(input_action)
-                """execute action"""
-                if running_type == "intelligent":
-                    reward, is_end = explorer.execute_action(input_action, all_info, self.explorer_group)
-                    # print("is_end", is_end)
-                    # print("reward", reward)
-                    self.patch_agv_icon(explorer)
-                    # 矫正一些值
-                    is_end = True if (self.layout.task_finished or self.running_time >= self.max_training_steps) else is_end
-                    self.smart_controller.store_info(self.create_info(), reward, is_end, explorer.explorer_name)
-                    if is_end:
-                        return self.running_time
                 else:
                     if input_action != "":
                         explorer.execute_action(input_action)
